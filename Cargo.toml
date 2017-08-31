@@ -1,0 +1,15 @@
+[package]
+name = "vulkan"
+version = "0.1.0"
+authors = ["Rosario Leonardi <rosario.leonardi@gmail.com>"]
+
+[dependencies]
+#vk_rust = { path = "../vkrust" }
+# vulkano = { path = "../vulkano/vulkano" }
+# vulkano-shader-derive = { path = "../vulkano/vulkano-shader-derive" }
+# vulkano-win = { path = "../vulkano/vulkano-win" }
+# cgmath = "0.14.1"
+# image = "0.14.0"
+libloading = "0.4.0"
+winit = "0.7.0"
+# time = "0.1.37"
