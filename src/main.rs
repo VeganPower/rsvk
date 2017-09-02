@@ -1,3 +1,6 @@
+#![allow(bad_style)]
+#![allow(dead_code)]
+
 extern crate winit;
 extern crate libloading;
 
@@ -618,8 +621,8 @@ fn resize_callback(width: u32, height: u32) {
 
 fn main()
 {
-   let window_width = 1920;
-   let window_height = 1080;
+   // let window_width = 1920;
+   // let window_height = 1080;
 
    let app_name = std::ffi::CString::new("VulkanTriangle").unwrap();
    let engine_name = std::ffi::CString::new("Obsidian").unwrap();
@@ -630,30 +633,32 @@ fn main()
    let app_info = vulkan::VkApplicationInfo {
                 sType: vulkan::VkStructureType::VK_STRUCTURE_TYPE_APPLICATION_INFO,
                 pNext: std::ptr::null(),
-                //flags : 
+                // flags : 0, 
                 pApplicationName: app_name.as_ptr(),
                 applicationVersion: 1,
                 pEngineName: engine_name.as_ptr(),
                 engineVersion: 0,
-                apiVersion: vulkan::vk_make_version(1, 0, 57),
+                apiVersion: vulkan::vk_make_version(1, 0, 0),
             };
    let core_validation = std::ffi::CString::new("VK_LAYER_LUNARG_core_validation").unwrap();
-   let mut layer_names = [core_validation.as_ptr()];
-
+   let layer_names = vec![core_validation.as_ptr()];
    let mut layer_count : u32 = 0;
    
-   unsafe{
+   unsafe
+   {
+   
    let vkEnumerateInstanceLayerProperties : libloading::Symbol<unsafe extern fn(*mut u32, *mut vulkan::VkLayerProperties) -> vulkan::VkResult> = vk_lib.get(b"vkEnumerateInstanceLayerProperties").unwrap();
    vkEnumerateInstanceLayerProperties(&mut layer_count, std::ptr::null_mut());
    println!("layer_count is {}", layer_count as i32);
+   
    }
    let create_info = vulkan::VkInstanceCreateInfo {
             sType: vulkan::VkStructureType::VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
             pNext: std::ptr::null(),
-            flags: Default::default(),
+            flags: 0, //Default::default(),
             pApplicationInfo: &app_info,
-            ppEnabledLayerNames: layer_names.as_ptr(), //std::ptr::null(),
-            enabledLayerCount: 1,
+            ppEnabledLayerNames: layer_names.as_ptr(),//std::ptr::null(),
+            enabledLayerCount: layer_names.len() as u32,
             ppEnabledExtensionNames: std::ptr::null(),
             enabledExtensionCount: 0
       };
